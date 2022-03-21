@@ -1,0 +1,45 @@
+.form-button {
+
+    flex: 1;
+    button {
+        width: 100%;
+        padding: .5em 1em;
+        border-radius: .5em;
+        border: none;
+        font-size: 1.25em;
+        box-shadow: 0 2px 2px 1px rgba(0, 0, 0, .5);
+        transition: all .15s ease;
+        
+        &:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 4px 7px 1px rgba(0, 0, 0, .7);
+            
+        }
+        &:active {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 3px 5px 1px rgba(0, 0, 0, .6);
+        }
+        &.dark:hover {
+            filter: brightness(1.5);
+        }
+        &.bright:hover {
+            filter: brightness(.7);
+        }
+        &.dark:active {
+            filter: brightness(1.2);
+        }
+        &.bright:active {
+            filter: brightness(.80);
+        }
+        
+        &.dis {
+            border: 2px inset black;
+            box-shadow: none;
+            cursor: not-allowed;
+            &:hover, &:active {
+                filter:none;
+                transform: none;
+            }
+        }
+    }
+}

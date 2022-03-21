@@ -1,0 +1,61 @@
+@import '../../assets/variables.scss';
+
+.user-box {
+    //border: solid black 1px;
+    display: flex;
+    flex-direction: column;
+    &:hover {
+        cursor: pointer;
+
+        .dropdown-items {
+            visibility: visible;
+        }
+    }
+
+}
+
+.avatar {
+    text-align: center;
+    line-height: 0;
+}
+.avatarImg {
+    line-height: 0;
+    height: 3.5rem;
+    border-radius: 50%;
+    border: white 5px solid;
+    box-shadow: -3px 3px 7px 0 rgba(50, 50, 50, .7);
+}
+
+.dropdown {
+    text-align: center;
+    color: $nav_font_color;
+    line-height: 0;
+}
+
+.open-dropdown-icon {
+    line-height: 0;
+    //border: red solid 1px;
+    color: $nav_background_color;
+    &:hover {
+        color: $nav_font_color;
+    }
+}
+
+.dropdown-items {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    z-index: 2;
+    line-height: 1;
+    visibility: hidden;
+}
+.dropdown-item {
+    background-color: #666;
+    border-radius: .3rem;
+    padding: .4rem;
+    box-shadow: -3px 3px 12px 1px rgba(50, 50, 50, .7);
+    &:hover {
+        filter: brightness(1.25)
+    }
+}

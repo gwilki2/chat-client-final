@@ -1,0 +1,32 @@
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  //background: linear-gradient(45deg, rgba(246, 255, 255, 0.78), rgba(210, 255, 255, .87), rgba(245, 255, 255, .78))
+  background: linear-gradient(45deg, rgba(255, 255, 255, .7) 20%, rgba(0, 100, 255, .5) 32%, rgba(250, 255, 255, .7) 50%), linear-gradient(-45deg, rgba(170, 170, 170, .95), rgba(255, 255, 255, .5));
+  position: relative;
+  overflow-x: hidden;
+}
+
+
+
+.flex-fill {
+  flex: 1;  
+}
+
+
+.form-panel {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+
+  h2 {
+    text-align: center;
+  }
+}
+
+.button-container {
+  display: flex;
+  gap: 0.25rem;
+  
+}

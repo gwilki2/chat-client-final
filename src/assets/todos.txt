@@ -1,0 +1,7 @@
+Update styling of File input field to allow for translations of the button and upload text, maybe a flip to progress bar/spinner.
+    Do this by hiding the input and using the label with htmlFor to display the clickable element 
+On login, get default language from user profile, if there is a localStorage lang item, use it.  If there is not, set language from user profile
+On user profile update/create, if the lang was changed, save to database, and update current selected to match. If not changed, do not update current selected, even if different.
+
+need to add login error message
+need to add translations for error messages
