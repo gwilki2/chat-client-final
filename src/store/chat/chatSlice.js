@@ -11,7 +11,7 @@ export default createSlice({
             state.socket = action.payload
         }, 
         recievedMessage: (state, action) => {
-            console.log(action.payload)
+            //console.log(action.payload)
             state.messages.push(action.payload)
         }
     }
