@@ -8,8 +8,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Panel from './components/UI/Panel';
 import ScreenContainer from './components/UI/ScreenContainer';
 import './locale/i18n' //i18n from 
-import { faCloud, faClouds} from '@fortawesome/pro-solid-svg-icons'
-import { useEffect, useRef, useState } from 'react';
 import AnimatedCloud from './components/AnimatedCloud';
 
 function App() {
@@ -19,7 +17,7 @@ function App() {
   const renderClouds = count => {
     const clouds = []
     for (let i = 0; i < count; i++){
-      clouds.push(<AnimatedCloud cloudId={'cloud' + i } key={'cloud' + i }/>)
+      clouds.push(<AnimatedCloud cloudIdx={i} key={'cloud' + i }/>)
     }
     return clouds
   }
@@ -27,7 +25,7 @@ function App() {
   return (
     <div className="App">
       <div style={{position: 'absolute', height: '0px'}}>
-        {renderClouds(7)}
+        {renderClouds(9)}
       </div>
       <NavBar />
       <ScreenContainer className="flex-fill">

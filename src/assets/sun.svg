@@ -8,7 +8,7 @@
             }
             .fa-primary {
                 opacity:1;
-                fill: #f9f9f9;
+                fill:   #ffd676;
             }
         </style>
     </defs>

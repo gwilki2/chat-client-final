@@ -54,7 +54,7 @@ const ChatScreen = () => {
     }
 
     useTitleBar(t(labels.chatWelcome))
-    console.log('rendering chatscreen', messages)
+    
     return (
         <div className={styleClasses['chat-screen']}>
             <Panel className={styleClasses['chat-title']}>

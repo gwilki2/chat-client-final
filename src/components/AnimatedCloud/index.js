@@ -5,7 +5,7 @@ import {faCloud, faClouds} from '@fortawesome/pro-solid-svg-icons'
 import gsap from 'gsap'
 
 
-const AnimatedCloud = ({cloudId }) => {
+const AnimatedCloud = ({cloudIdx }) => {
     
     const animRef = useRef()
     const iconArry = [faCloud, faClouds]
@@ -15,25 +15,24 @@ const AnimatedCloud = ({cloudId }) => {
     const [icon, setIcon] = useState(iconArry[Math.floor(Math.random() * 2)])
     const [trigger, setTrigger]= useState(0)
 
-    const runAnim = () => {
-        
-    }
-
     useEffect(() => {
         const speedVariance = [1,1,1,1,1.2,1,.9,.8,.7,.6,.5]
-        //console.log('running runAnim')
         const width = window.innerWidth
         const height = window.innerHeight
         const animEl = animRef.current
         const selfWidth = animEl.offsetWidth
         const selfHeight = animEl.offsetHeight
-        //console.log(width, selfWidth, size, icon.iconName, cloudId)
-        
+        const randBetween = () => {
+            if (cloudIdx % 4 === 0) return [0, 10]
+            if (cloudIdx % 4 === 1) return [15, 35]
+            if (cloudIdx % 4 === 2) return [45, 55]
+            return [60, 70]
+        }
         gsap.set(animEl, {x: -selfWidth, y: (height * gsap.utils.random(.45,1)) - selfHeight})
         gsap.to(animEl, {
             x: width,
-            delay: Math.random() * 50,
-            duration: 90 * speedVariance[size],
+            delay: gsap.utils.random(...randBetween()),
+            duration: 100 * speedVariance[size],
             ease: 'linear',
             onComplete: () => {
                 setSize(Math.floor(Math.random() * 5) + 5)
@@ -41,13 +40,9 @@ const AnimatedCloud = ({cloudId }) => {
                 setTrigger(prev => ++prev)
             }
         })
-        
 
-
-        //runAnim()
     }, [trigger])
     
-
     return (
         <div
             ref={animRef}

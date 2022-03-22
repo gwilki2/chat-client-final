@@ -67,7 +67,7 @@ const AccountScreen = ({ type = 'create' }) => {
 
         if (password !== confirmPassword) return flashError(t(labels.failedPasswordConfirm))
         const formData = new FormData(e.target)
-        console.log(formData)
+        //console.log(formData)
         type === 'create' ? dispatch(register(formData, navigate, setStatusMsg)) : dispatch(updateUser(formData, setStatusMsg))
         avatarInputComponentRef.current.removeAllFiles()
         setPassword('')
@@ -95,7 +95,7 @@ const AccountScreen = ({ type = 'create' }) => {
                 break
         }
     }
-    console.log('rendering accountScreen')
+    //console.log('rendering accountScreen')
 
     return (
         <div className={styleClasses['account-screen']}>

@@ -49,7 +49,7 @@ const FileInput = ({
         fileInputRef.current.click()
     }
 
-    console.log('rendering file input component', files, files[0]?.name)
+    //console.log('rendering file input component', files, files[0]?.name)
     return (
         <div className={`${styleClasses['file-input']} ${className}`}>
             <div>

@@ -20,7 +20,7 @@ const DisplayMessage = ({ message, scrollAnchorRef }) => {
         }, 15000)
         scrollAnchorRef.current.scrollIntoView(true)
     }, [])
-    console.log('rendering displaymsg', message)
+
     return (
         <div
             className={
@@ -28,11 +28,11 @@ const DisplayMessage = ({ message, scrollAnchorRef }) => {
                 ${message.isCurrUser ? styleClasses['current-user'] : styleClasses['other-user']}`
             }
         >
-            <h3 className={styleClasses['message-meta-data']}>
+            <h6 className={styleClasses['message-meta-data']}>
                 {`${message.isCurrUser ? t(labels.you) : message.firstName}: ${formatDistance(message.date, currentDate, {addSuffix: true, locale})}`}
-            </h3>
+            </h6>
             <div className={styleClasses['message-body']}>
-                <img src={message.avatar} alt="avatar" /> {message.message.split(/\n/).map((p, i) => <p key={i}>{p}</p>)}
+                <img src={message.avatar} alt="avatar" /> {message.message.split(/\n/).map((msg, i) => <p key={i}>{msg}</p>)}
             </div>
         </div>
     )
