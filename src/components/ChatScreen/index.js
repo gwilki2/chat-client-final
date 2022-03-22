@@ -9,18 +9,21 @@ import FormButton from '../UI/FormButton'
 import { useSelector } from 'react-redux'
 import {v4} from 'uuid'
 import DisplayMessage from './DisplayMessage'
-import beep1 from '../../assets/mixkit-long-pop-2358.wav'
+//import beep1 from '../../assets/mixkit-long-pop-2358.wav'
+import useSocket from '../../hooks/useSocket'
 
 const ChatScreen = () => {
 
     const { t } = useTranslation()
     const currUser = useSelector(state => state.auth.user)
     const lang = useSelector(state => state.lang)
-    
-    const [messages, setMessages] = useState([])
+    const socket = useSelector(state => state.chat.socket)
+    const messages = useSelector(state => state.chat.messages)
     const [message, setMessage] = useState('')
     const [lastKeyCode, setLastKeyCode] = useState()
     const scrollAnchorRef = useRef()
+
+    useSocket(currUser)
 
     const handleInputChange = e => {
         
@@ -28,21 +31,16 @@ const ChatScreen = () => {
     }
 
     const handleSendMessage = () => {
-        if (message) {
-            setMessages(prev => [
-                ...prev,
-                {
-                    ...currUser,
-                    message,
-                    date: new Date(),
-                    msgId: v4(),
-                    isCurrUser: true,
-                    submittedWithLang: lang
-                }
-            ]);
-            (new Audio(beep1)).play()
-            setMessage('')
+        const newMsg =  {
+            ...currUser,
+            message,
+            date: new Date(),
+            msgId: v4(),
+            submittedWithLang: lang
         }
+
+        socket.emit('message', newMsg)
+        setMessage('')
     }
 
     const sendOnEnterKey = e => {

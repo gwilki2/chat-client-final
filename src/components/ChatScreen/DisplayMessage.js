@@ -29,7 +29,7 @@ const DisplayMessage = ({ message, scrollAnchorRef }) => {
             }
         >
             <h6 className={styleClasses['message-meta-data']}>
-                {`${message.isCurrUser ? t(labels.you) : message.firstName}: ${formatDistance(message.date, currentDate, {addSuffix: true, locale})}`}
+                {`${message.isCurrUser ? t(labels.you) : message.firstName}: ${formatDistance(new Date(message.date), currentDate, {addSuffix: true, locale})}`}
             </h6>
             <div className={styleClasses['message-body']}>
                 <img src={message.avatar} alt="avatar" /> {message.message.split(/\n/).map((msg, i) => <p key={i}>{msg}</p>)}
