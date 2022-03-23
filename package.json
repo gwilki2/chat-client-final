@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.3.0",
+    "@fortawesome/pro-duotone-svg-icons": "^6.1.1",
+    "@fortawesome/pro-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.17",
     "@reduxjs/toolkit": "^1.8.0",
     "@testing-library/jest-dom": "^5.16.2",
