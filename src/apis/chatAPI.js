@@ -1,5 +1,6 @@
 import axios from 'axios'
+import defaults from '../assets/defaults'
 
 export default axios.create({
-    baseURL: 'http://localhost:3001'
+    baseURL: defaults.chatApiUrl
 })
