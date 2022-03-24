@@ -4,7 +4,7 @@ const defaults = {
     titleIcon: titleIcon, 
     appTitle: 'CloudyChat', 
     titleText: 'CloudyChat', 
-    chatApiUrl: 'https://cloudy-chat-server.herokuapp.com/'
+    chatServerUrl: 'https://cloudy-chat-server.herokuapp.com/' 
 }
 
 export default defaults

@@ -1,4 +1,5 @@
 import socketIoClient from 'socket.io-client'
+import defaults from '../assets/defaults'
 
-export default socketIoClient.connect('http://localhost:3001')
+export default socketIoClient.connect(defaults.chatServerUrl)
 
