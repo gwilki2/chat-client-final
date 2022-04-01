@@ -11,7 +11,7 @@ import formIcon from '../../assets/list-check-duotone.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRef, useState } from 'react'
 import { register, updateUser } from '../../store/auth/authActions'
-import FileInput from '../UI/FileInput'
+import FileInput from '../UI/FileInput' 
 
 const AccountScreen = ({ type = 'create' }) => {
 
