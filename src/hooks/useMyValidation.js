@@ -13,20 +13,24 @@ const useMyValidation = (name, initVal, validationFns, specialFormattingFn) => {
 
 
     const onChange = (newValue) => {
+
+        const errList = []
+        let finalIsValid = true
+
         setValue(prev => {
             if (specialFormattingFn) return specialFormattingFn(newValue)
             return newValue
         })
         
-        setErrors([])
         validationFns.forEach(valFn => {
             if (!validate[valFn.name](newValue, ...valFn.params)) {
-                setIsValid(false)
-                setErrors(prev => [...prev, valFn.name])
+                finalIsValid = false
+                errList.push(valFn.name)
             }
         })
 
-        if(!errors.length) setIsValid(true)
+        setErrors([...errList])
+        setIsValid(finalIsValid)
     }
     const onBlur = (value) => {
         if (value) return setIsTouched(true)

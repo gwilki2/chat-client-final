@@ -83,7 +83,8 @@ const LoginScreen = ({ type }) => {
                             name: password.name, 
                             onChange: e => password.onChange(e.target.value),
                             onBlur: e => password.onBlur(e.target.value),
-                            value: password.value
+                            value: password.value, 
+                            autoComplete: 'off'
                         }}
                         labelText={t(labels.password) + ": "}
                         hasError={password.hasErrorAfterTouch}

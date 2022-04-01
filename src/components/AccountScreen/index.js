@@ -177,7 +177,8 @@ const AccountScreen = ({ type = 'create' }) => {
                             placeholder: t(labels.enterPassword),
                             type: 'password',
                             value: password,
-                            onChange: handleInputChange
+                            onChange: handleInputChange, 
+                            autoComplete: 'off'
                         }}
                         labelText={t(labels.password) + ": "}
                     />
@@ -188,7 +189,8 @@ const AccountScreen = ({ type = 'create' }) => {
                             placeholder: t(labels.confirmPassword),
                             type: 'password',
                             value: confirmPassword,
-                            onChange: handleInputChange
+                            onChange: handleInputChange, 
+                            autoComplete: 'off'
                         }}
                         labelText={t(labels.confirmPassword) + ": "}
                     />
