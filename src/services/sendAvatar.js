@@ -1,8 +1,7 @@
 const axios = require('axios')
 
-module.exports = async (url, file) => {
+const sendAvatar = async (url, file) => {
     
-
     try {
         const result = await axios.put(url, file)
         return result    
@@ -10,4 +9,5 @@ module.exports = async (url, file) => {
         throw new Error(error)
     }
 }
-    
+
+export default sendAvatar
