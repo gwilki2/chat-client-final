@@ -23,9 +23,9 @@ const AccountScreen = ({ type = 'create' }) => {
 
     const [firstName, setFirstName] = useState(user.firstName || '')  // using || ''  to set empty string for the register/create user version of this component.  
     const [lastName, setLastName] = useState(user.lastName || '')
-    // const [lang, setLang] = useState('') //cant controll select boxes,  BUT can defaultValue them. Also, not using the tracked values in the end.  Instead using FormData
-    // const [gender, setGender] = useState('')
-    // const [avatar, setAvatar] = useState(user.avatar || '') //cant/shouldn't controll file type input.  Also using FormData from event object in the end, so need for tracking. 
+    // const [lang, setLang] = useState('') //handing by ref
+    // const [gender, setGender] = useState('') //handling by ref
+    // const [avatar, setAvatar] = useState('')  //handling by ref
     const [email, setEmail] = useState(user.email || '')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -66,9 +66,21 @@ const AccountScreen = ({ type = 'create' }) => {
         e.preventDefault()
 
         if (password !== confirmPassword) return flashError(t(labels.failedPasswordConfirm))
-        const formData = new FormData(e.target)
-        //console.log(formData)
-        type === 'create' ? dispatch(register(formData, navigate, setStatusMsg)) : dispatch(updateUser(formData, setStatusMsg))
+        const {files} = avatarInputComponentRef.current
+        //const formData = new FormData(e.target) //nolonger using multer on server, send regular data
+        const formData = {
+            firstName,
+            lastName, 
+            lang: defaultLangRef.current.value, 
+            gender: genderRef.current.value,
+            avatar: files[0]?.name ||'',
+            email, 
+            password, 
+            confirmPassword
+        }
+        console.log(formData, files)
+        
+        type === 'create' ? dispatch(register(formData, navigate, setStatusMsg, files[0])) : dispatch(updateUser(formData, setStatusMsg, files[0]))
         avatarInputComponentRef.current.removeAllFiles()
         setPassword('')
         setConfirmPassword('')
@@ -125,7 +137,7 @@ const AccountScreen = ({ type = 'create' }) => {
                         selectProps={{
                             name: 'lang',
                             defaultValue: user.lang || '', 
-                            ref: defaultLangRef
+                            ref: defaultLangRef, 
                         }}
                         labelText={t(labels.defaultLang) + ": "}
                         options={[
@@ -140,7 +152,7 @@ const AccountScreen = ({ type = 'create' }) => {
                         selectProps={{
                             name: 'gender',
                             defaultValue: user.gender || '', 
-                            ref: genderRef, 
+                            ref: genderRef,
                         }}
                         labelText={t(labels.gender) + ": "}
                         options={[
@@ -153,7 +165,7 @@ const AccountScreen = ({ type = 'create' }) => {
                     />
                     <FileInput
                         ref={avatarInputComponentRef}
-                        id ='avatar'
+                        id='avatar' 
                         labelText={t(labels.uploadAvatar) + ": "}
                         buttonText={t(labels.uploadAvatar)}
                         accept="image/*"

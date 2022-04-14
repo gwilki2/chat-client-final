@@ -1,15 +1,15 @@
 import { useEffect } from "react"
-import defaults from '../assets/defaults'
+import {titleText, titleIcon} from '../config/appConfig'
 
 export const useTitleBar = (title, iconSrc) => {
     
     useEffect(() => {
-            document.title = title || defaults.titleText
-            document.getElementById('title-bar-icon').href = iconSrc || defaults.titleIcon
+            document.title = title || titleText
+            document.getElementById('title-bar-icon').href = iconSrc || titleIcon
         
         return () => {
-            document.title = defaults.titleText
-            document.getElementById('title-bar-icon').href = defaults.titleIcon
+            document.title = titleText
+            document.getElementById('title-bar-icon').href = titleIcon
         }
     })
 }

@@ -1,6 +1,6 @@
 import axios from 'axios'
-import defaults from '../assets/defaults'
+import {chatServerUrl} from '../config/appConfig'
 
 export default axios.create({
-    baseURL: defaults.chatServerUrl
+    baseURL: chatServerUrl
 })

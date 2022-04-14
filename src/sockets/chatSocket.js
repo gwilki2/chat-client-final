@@ -1,5 +1,5 @@
 import socketIoClient from 'socket.io-client'
-import defaults from '../assets/defaults'
+import {chatServerUrl} from '../config/appConfig'
 
-export default socketIoClient.connect(defaults.chatServerUrl)
+export default socketIoClient.connect(chatServerUrl)
 

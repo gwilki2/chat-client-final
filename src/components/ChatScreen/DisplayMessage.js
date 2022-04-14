@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import labels from '../../locale/labels'
 import { useEffect, useState } from 'react'
+import buildAvatarSrc from '../../utility/buildAvatarSrc'
 
 const DisplayMessage = ({ message, scrollAnchorRef }) => {
     
@@ -32,7 +33,7 @@ const DisplayMessage = ({ message, scrollAnchorRef }) => {
                 {`${message.isCurrUser ? t(labels.you) : message.firstName}: ${formatDistance(new Date(message.date), currentDate, {addSuffix: true, locale})}`}
             </h6>
             <div className={styleClasses['message-body']}>
-                <img src={message.avatar} alt="avatar" /> {message.message.split(/\n/).map((msg, i) => <p key={i}>{msg}</p>)}
+                <img src={buildAvatarSrc(message.avatar)} alt="avatar" /> {message.message.split(/\n/).map((msg, i) => <p key={i}>{msg}</p>)}
             </div>
         </div>
     )

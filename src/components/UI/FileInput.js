@@ -18,10 +18,9 @@ const FileInput = ({
 
     const handleFilesSelected = e => {
 
-        console.log('log files', e.target.files)
+        console.log('log files', e.target.files[0])
         console.log('log value', e.target.value)
         setFiles([...e.target.files])
-
     }
 
     const removeAllFiles = () => {
@@ -30,7 +29,8 @@ const FileInput = ({
     }
     
     useImperativeHandle(ref, () => ({
-        removeAllFiles
+        removeAllFiles, 
+        files
     }))
     
     const handleDeleteThisFile = (idx) => {

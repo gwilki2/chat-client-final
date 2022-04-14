@@ -5,6 +5,7 @@ import i18n from '../../locale/i18n'
 import labels from '../../locale/labels'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/pro-duotone-svg-icons'
+import sendAvatar from '../../services/sendAvatar'
 
 const {loggedIn, loggedOut, registered, updatedUser} = authSlice.actions
 
@@ -23,10 +24,13 @@ export const logIn = (email, password, navigate) => async dispatch => {
 
 }
 
-export const register = (formData, navigate, setStatusMsg) => async dispatch => {
+export const register = (formData, navigate, setStatusMsg, avatarFile) => async dispatch => {
     try {
         setStatusMsg('Sending Account request... Please Wait...')
         const response = await registerService(formData)
+        if (response.uploadUrl && avatarFile) {
+            await sendAvatar(response.uploadUrl, avatarFile)
+        }
         dispatch(registered(response))
         dispatch(changeLanguage(response.user.lang))
         setStatusMsg('')
@@ -53,10 +57,15 @@ export const logOut = () => async dispatch => {
 
 }
 
-export const updateUser = (updatedUserData, setStatusMsg) => async dispatch => {
+export const updateUser = (updatedUserData, setStatusMsg, avatarFile) => async dispatch => {
     try {
         setStatusMsg(<FontAwesomeIcon icon={faSpinner} />)
         const response = await updateUserService(updatedUserData)
+        console.log(response)
+        if (response.uploadUrl) {
+            await sendAvatar(response.uploadUrl, avatarFile)
+        }
+
         dispatch(updatedUser(response))
         dispatch(changeLanguage(response.user.lang))
         setStatusMsg(i18n.t(labels.accountUpdated))

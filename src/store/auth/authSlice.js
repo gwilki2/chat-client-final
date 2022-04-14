@@ -1,12 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import chatAPI from '../../apis/chatAPI'
+
+const initialState = {
+    user: JSON.parse(localStorage.getItem('user'))|| {}, 
+    token: localStorage.getItem('token') || '', 
+    isLoggedIn: !!localStorage.getItem('token') 
+}
+
+if (initialState.token) chatAPI.defaults.headers['Authorization'] = `Bearer ${initialState.token}`
 
 export default createSlice({
     name: 'auth', 
-    initialState: {
-        user: JSON.parse(localStorage.getItem('user'))|| {}, 
-        token: localStorage.getItem('token') || '', 
-        isLoggedIn: !!localStorage.getItem('token') 
-    }, 
+    initialState, 
     reducers: {
         loggedIn: (state, action) => {
             state.user = action.payload.user

@@ -11,6 +11,7 @@ export const createSocket = (socket) => async dispatch => {
 }
 
 export const recieveMessage = (message, currUserId) => async dispatch => {
+    console.log(message)
     message.isCurrUser = message.userId === currUserId
     delete message.createdAt
     delete message.updatedAt

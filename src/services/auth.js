@@ -31,7 +31,7 @@ export const loginService = async (email, password) => {
         return data
     } catch (e) {
         console.log('loginservice', e.response.data.error)
-        throw e
+        throw new Error(e)
     }
 }
 
@@ -46,6 +46,7 @@ export const registerService = async (formData) => {
 }
 
 export const updateUserService = async (formData) => {
+    console.log(formData)
     try {
         const { data } = await chatAPI.post('/update', formData)
         setLocalStorageAndHeaders(data)
