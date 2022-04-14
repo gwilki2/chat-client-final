@@ -179,10 +179,12 @@ const AccountScreen = ({ type = 'create' }) => {
                             type: 'email',
                             value: email,
                             onChange: handleInputChange, 
-                            autoComplete: 'new-password'
+                            
                         }}
                         labelText={t(labels.email) + ": "}
                     />
+                    <input type="text" name="force-browser-to-stop-autocomplete" style={{display: 'none'}} />
+                    <input type="password" name="force-browser-to-stop-autocomplete" style={{display: 'none'}} />
                     <Input
                         inputProps={{
                             id: 'password',
@@ -191,7 +193,7 @@ const AccountScreen = ({ type = 'create' }) => {
                             type: 'password',
                             value: password,
                             onChange: handleInputChange, 
-                            autoComplete: 'new-password'
+                            autoComplete: 'off'
                         }}
                         labelText={t(labels.password) + ": "}
                     />
@@ -203,7 +205,7 @@ const AccountScreen = ({ type = 'create' }) => {
                             type: 'password',
                             value: confirmPassword,
                             onChange: handleInputChange, 
-                            autoComplete: 'new-password'
+                            autoComplete: 'off'
                         }}
                         labelText={t(labels.confirmPassword) + ": "}
                     />
