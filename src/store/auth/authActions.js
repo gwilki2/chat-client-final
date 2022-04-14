@@ -76,7 +76,7 @@ export const updateUser = (updatedUserData, setStatusMsg, avatarFile) => async d
 
     } catch (e) {
         setStatusMsg(i18n.t(labels.genericError))
-        console.log('logout request error', e)
+        console.log('update user request error', e)
         setTimeout(() => {
             setStatusMsg('')
         }, 2000)
