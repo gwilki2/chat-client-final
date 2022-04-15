@@ -9,7 +9,7 @@ import labels from '../../locale/labels'
 import { useTitleBar } from '../../hooks/useTitleBar'
 import formIcon from '../../assets/list-check-duotone.svg'
 import { useDispatch, useSelector } from 'react-redux'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { register, updateUser } from '../../store/auth/authActions'
 import FileInput from '../UI/FileInput' 
 
@@ -29,6 +29,7 @@ const AccountScreen = ({ type = 'create' }) => {
     const [email, setEmail] = useState(user.email || '')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [isReadOnly, setIsReadOnly] =useState(true)
 
     const [statusMsg, setStatusMsg] = useState('')
 
@@ -95,6 +96,7 @@ const AccountScreen = ({ type = 'create' }) => {
                 setLastName(e.target.value)
                 break
             case 'email':
+                console.log('email changed', e.target.value)
                 setEmail(e.target.value)
                 break
             case 'password':
@@ -109,11 +111,25 @@ const AccountScreen = ({ type = 'create' }) => {
     }
     //console.log('rendering accountScreen')
 
+    useEffect(() => {
+        //autofill is overwriting initial values blank or preset forcing a rewrite of initial values
+        //setFirstName('test1234')
+
+        setTimeout(() => {
+            setIsReadOnly(false)
+        }, 1000)
+        
+    }, [])
+
     return (
         <div className={styleClasses['account-screen']}>
             <Panel className="form-panel">
                 <h2>{screenTitle}</h2>
-                <form className={styleClasses['account-form']} onSubmit={onSubmitAccount}>
+                <form
+                    className={styleClasses['account-form']}
+                    onSubmit={onSubmitAccount}
+                    autoComplete={type==='create'? 'on':'off' }
+                >
                     <Input
                         inputProps={{
                             id: 'firstName',
@@ -176,15 +192,15 @@ const AccountScreen = ({ type = 'create' }) => {
                             id: 'email',
                             name: 'email',
                             placeholder: t(labels.enterEmail),
-                            type: 'email',
+                            type: 'text',
                             value: email,
-                            onChange: handleInputChange, 
+                            onChange: handleInputChange,
+                            autoComplete: 'off', 
+                            readOnly: isReadOnly
                             
                         }}
                         labelText={t(labels.email) + ": "}
                     />
-                    <input type="text" name="force-browser-to-stop-autocomplete" style={{display: 'none'}} />
-                    <input type="password" name="force-browser-to-stop-autocomplete" style={{display: 'none'}} />
                     <Input
                         inputProps={{
                             id: 'password',
@@ -193,7 +209,9 @@ const AccountScreen = ({ type = 'create' }) => {
                             type: 'password',
                             value: password,
                             onChange: handleInputChange, 
-                            autoComplete: 'off'
+                            autoComplete: 'off', 
+                            readOnly: isReadOnly,
+
                         }}
                         labelText={t(labels.password) + ": "}
                     />
@@ -205,7 +223,8 @@ const AccountScreen = ({ type = 'create' }) => {
                             type: 'password',
                             value: confirmPassword,
                             onChange: handleInputChange, 
-                            autoComplete: 'off'
+                            autoComplete: 'off', 
+                            readOnly: isReadOnly
                         }}
                         labelText={t(labels.confirmPassword) + ": "}
                     />
