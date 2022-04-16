@@ -40,7 +40,8 @@ const translations = {
     [labels.isEmailFailed]: "Por favor introduzca una dirección de correo electrónico válida.", 
     [labels.isNotEmptyFailed]: "La entrada no puede estar en blanco o con espacios en blanco.", 
     [labels.isNotEmptyPasswordFailed]: "La contraseña no puede estar en blanco o con espacios en blanco.",
-    [labels.hasMinCharsPasswordFailed]: "La contraseña no es lo suficientemente larga. (6+)" 
+    [labels.hasMinCharsPasswordFailed]: "La contraseña no es lo suficientemente larga. (6+)", 
+    [labels.minCharsWhenFilledPasswordFailed]: "La contraseña no es lo suficientemente larga. (6+)" 
 
 }
 

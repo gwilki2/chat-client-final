@@ -37,6 +37,17 @@ const useMyValidation = (name, initVal, validationFns, specialFormattingFn) => {
         return setIsTouched(false)
     }
 
+    const clear = () => {
+        setValue('')
+    }
+
+    const reset = () => {
+        setValue(initVal)
+        setIsTouched(false)
+        setIsValid(false)
+        setErrors([])
+    }
+
 
 
     return {
@@ -47,7 +58,9 @@ const useMyValidation = (name, initVal, validationFns, specialFormattingFn) => {
         isValid, 
         errors, 
         onBlur, 
-        hasErrorAfterTouch: isTouched && !!errors.length
+        hasErrorAfterTouch: isTouched && !!errors.length, 
+        clear, 
+        reset
     }
 }
 

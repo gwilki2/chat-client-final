@@ -59,3 +59,10 @@
         filter: brightness(1.25)
     }
 }
+
+@media screen and (max-width: $media_small) {
+    .avatarImg {
+        height: 2rem;
+        border: white 2px solid;
+    }
+}

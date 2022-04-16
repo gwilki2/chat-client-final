@@ -47,7 +47,8 @@ const labels = {
     "isEmailFailed": "isEmailFailed", 
     "isNotEmptyFailed": "isNotEmptyFailed", 
     "isNotEmptyPasswordFailed": "isNotEmptyPasswordFailed", 
-    "hasMinCharsPasswordFailed": "hasMinCharsPasswordFailed"
+    "hasMinCharsPasswordFailed": "hasMinCharsPasswordFailed", 
+    "minCharsWhenFilledPasswordFailed": "minCharsWhenFilledPasswordFailed"
 }
 
 export default labels

@@ -8,7 +8,7 @@
     // background-size: 50rem;
     // background-position: center;
     background-repeat: no-repeat;
-    filter: drop-shadow(-2px 1px 6px rgba(0, 0, 50, .5));
+    filter: drop-shadow(-2px 1px 6px rgba(0, 0, 50, 0.5));
 
 }
 
@@ -38,4 +38,19 @@
 .inner-inner-panel {
     height: 100%;
     overflow: auto;
+}
+
+
+@media screen and (max-width: $media_small) {
+    .screen-container {
+        padding: 0 1rem;
+        filter: drop-shadow(-2px 1px 6px rgba(0, 0, 0, 0));
+    }
+    
+    .inner-panel {
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
 }

@@ -40,7 +40,8 @@ const translations = {
     [labels.isEmailFailed]: "Veuillez saisir une adresse e-mail valide.", 
     [labels.isNotEmptyFailed]: "L'entrée ne peut pas être vide ou vide.", 
     [labels.isNotEmptyPasswordFailed] : "Le mot de passe ne peut pas être vide ou composé d'espaces blancs.",
-    [labels.hasMinCharsPasswordFailed] : "Le mot de passe n'est pas assez long. (6+)" 
+    [labels.hasMinCharsPasswordFailed] : "Le mot de passe n'est pas assez long. (6+)",
+    [labels.minCharsWhenFilledPasswordFailed] : "Le mot de passe n'est pas assez long. (6+)",
 
 
 }

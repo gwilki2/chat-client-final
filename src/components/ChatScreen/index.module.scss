@@ -1,3 +1,5 @@
+@import '../../assets/variables.scss';
+
 .chat-screen {
     color: #777;
     padding: 1rem 10vw;
@@ -39,4 +41,46 @@
         font-size: 1.25rem;
     }
     
+}
+
+
+@media screen and (max-width: $media_small) {
+    .chat-screen {
+        padding: 0;
+        gap: 1rem;
+    
+    }
+    
+    .chat-panel {
+        height: 85vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .chat-title {
+        display: none;
+        font-size: .7rem;
+        padding: .2rem;
+    }
+    
+    .chat-messages {
+        overflow:auto;
+        padding: .5rem .5rem .5rem 2.25rem;
+        gap: .75rem;
+    }
+    
+    .send-msg-container {
+        display: flex;
+        align-items: flex-end;
+        gap: 5px;
+    }
+    
+    .msg-input {
+        flex: 4;
+        input {
+            padding:.6rem;
+            font-size: 1.25rem;
+        }
+        
+    }
 }

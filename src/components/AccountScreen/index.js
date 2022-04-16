@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useRef, useState } from 'react'
 import { register, updateUser } from '../../store/auth/authActions'
 import FileInput from '../UI/FileInput' 
+import { fnNames } from '../../validators'
+import useMyValidation from '../../hooks/useMyValidation'
 
 const AccountScreen = ({ type = 'create' }) => {
 
@@ -21,15 +23,45 @@ const AccountScreen = ({ type = 'create' }) => {
     const navigate = useNavigate()
     
 
-    const [firstName, setFirstName] = useState(user.firstName || '')  // using || ''  to set empty string for the register/create user version of this component.  
-    const [lastName, setLastName] = useState(user.lastName || '')
-    // const [lang, setLang] = useState('') //handing by ref
-    // const [gender, setGender] = useState('') //handling by ref
-    // const [avatar, setAvatar] = useState('')  //handling by ref
-    const [email, setEmail] = useState(user.email || '')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [isReadOnly, setIsReadOnly] =useState(true)
+    const email = useMyValidation(
+        'email',
+        user.email || '',
+        [
+            { name: fnNames.isEmail, params: [] },
+            { name: fnNames.isNotEmpty, params: [] }
+        ],
+        val => val.trim()
+    )
+    const password = useMyValidation(
+        'password',
+        '',
+        [
+            {name: type==='create' ? fnNames.hasMinChars : fnNames.minCharsWhenFilled, params: [6]}
+        ]
+    )
+    const firstName = useMyValidation(
+        'firstName',
+        user.firstName || '',
+        [
+            {name: fnNames.isNotEmpty, params: []}
+        ]
+    )
+    const lastName = useMyValidation(
+        'lastName',
+        user.lastName || '',
+        [
+            {name: fnNames.isNotEmpty, params: []}
+        ]
+    )
+    const confirmPassword = useMyValidation(
+        'confirmPassword',
+        '',
+        [
+            {name: type==='create' ? fnNames.hasMinChars : fnNames.minCharsWhenFilled, params: [6]}
+        ]
+    )
+
+    const [isReadOnly, setIsReadOnly] = useState(true)
 
     const [statusMsg, setStatusMsg] = useState('')
 
@@ -52,64 +84,44 @@ const AccountScreen = ({ type = 'create' }) => {
         navigate(-1)
     }
     const handleClearFields = () => {
-        setFirstName('')
-        setLastName('')
+        firstName.reset()
+        lastName.reset()
         defaultLangRef.current.value = ''
         avatarInputComponentRef.current.removeAllFiles()
         genderRef.current.value = ''
-        setEmail('')
-        setConfirmPassword('')
-        setPassword('')
+        email.reset()
+        confirmPassword.reset()
+        password.reset()
         
     }
 
     const onSubmitAccount = e => {
         e.preventDefault()
 
-        if (password !== confirmPassword) return flashError(t(labels.failedPasswordConfirm))
+        if (password.value !== confirmPassword.value) return flashError(t(labels.failedPasswordConfirm))
+        if (!defaultLangRef.current.value) return flashError(t(labels.defaultLangIsRequired))
+        if (!genderRef.current.value) return flashError(t(labels.genderIsRequired))
         const {files} = avatarInputComponentRef.current
         //const formData = new FormData(e.target) //nolonger using multer on server, send regular data
         const formData = {
-            firstName,
-            lastName, 
+            firstName: firstName.value,
+            lastName: lastName.value, 
             lang: defaultLangRef.current.value, 
             gender: genderRef.current.value,
             avatar: files[0]?.name ||'',
-            email, 
-            password, 
-            confirmPassword
+            email: email.value, 
+            password: password.value, 
+            confirmPassword: confirmPassword.value
         }
         console.log(formData, files)
         
         type === 'create' ? dispatch(register(formData, navigate, setStatusMsg, files[0])) : dispatch(updateUser(formData, setStatusMsg, files[0]))
         avatarInputComponentRef.current.removeAllFiles()
-        setPassword('')
-        setConfirmPassword('')
+        password.reset()
+        confirmPassword.reset()
 
     }
-    const handleInputChange = e => {
-        switch (e.target.name) {
-            case 'firstName':
-                setFirstName(e.target.value)
-                break
-            case 'lastName':
-                setLastName(e.target.value)
-                break
-            case 'email':
-                console.log('email changed', e.target.value)
-                setEmail(e.target.value)
-                break
-            case 'password':
-                setPassword(e.target.value)
-                break
-            case 'confirmPassword':
-                setConfirmPassword(e.target.value)
-                break
-            default:
-                break
-        }
-    }
-    //console.log('rendering accountScreen')
+    
 
     useEffect(() => {
         //autofill is overwriting initial values blank or preset forcing a rewrite of initial values
@@ -134,21 +146,29 @@ const AccountScreen = ({ type = 'create' }) => {
                         inputProps={{
                             id: 'firstName',
                             name: 'firstName',
-                            value: firstName,
-                            onChange: handleInputChange
+                            value: firstName.value,
+                            onChange: e => firstName.onChange(e.target.value),
+                            onBlur: e => firstName.onBlur(e.target.value)
 
                         }}
+                        indicateRequired={true}
                         labelText={t(labels.firstName) + ": "}
                     />
+                    {firstName.hasErrorAfterTouch && firstName.errors.map(error => <p style={{color:'red'}} key={error}>{t(error + 'Failed')}</p>)}
+
                     <Input
                         inputProps={{
                             id: 'lastName',
                             name: 'lastName',
-                            value: lastName,
-                            onChange: handleInputChange
+                            value: lastName.value,
+                            onChange: e => lastName.onChange(e.target.value),
+                            onBlur: e => lastName.onBlur(e.target.value)
                         }}
+                        indicateRequired={true}
                         labelText={t(labels.lastName) + ": "}
                     />
+                    {lastName.hasErrorAfterTouch && lastName.errors.map(error => <p style={{color:'red'}} key={error}>{t(error + 'Failed')}</p>)}
+                    
                     <Select
                         selectProps={{
                             name: 'lang',
@@ -163,7 +183,9 @@ const AccountScreen = ({ type = 'create' }) => {
                             { value: "es", label: '🇪🇸/🇲🇽 Español' }
                         ]}
                         disabledOption=""
+                        indicateRequired={true}
                     />
+                    
                     <Select
                         selectProps={{
                             name: 'gender',
@@ -178,7 +200,9 @@ const AccountScreen = ({ type = 'create' }) => {
                             { value: "other", label: `❔ ${t(labels.otherGender)}` }
                         ]}
                         disabledOption=""
+                        indicateRequired={true}
                     />
+                    
                     <FileInput
                         ref={avatarInputComponentRef}
                         id='avatar' 
@@ -193,48 +217,74 @@ const AccountScreen = ({ type = 'create' }) => {
                             name: 'email',
                             placeholder: t(labels.enterEmail),
                             type: 'text',
-                            value: email,
-                            onChange: handleInputChange,
+                            onChange: e => email.onChange(e.target.value),
+                            onBlur: e => email.onBlur(e.target.value),
+                            value: email.value,
                             autoComplete: 'off', 
                             readOnly: isReadOnly
                             
                         }}
+                        indicateRequired={true}
                         labelText={t(labels.email) + ": "}
+                        hasError={email.hasErrorAfterTouch}
                     />
+                    {email.hasErrorAfterTouch && email.errors.map(error => <p style={{color:'red'}} key={error}>{t(error + 'Failed')}</p>)}
+                    
                     <Input
                         inputProps={{
                             id: 'password',
                             name: 'password',
                             placeholder: t(labels.enterPassword),
                             type: 'password',
-                            value: password,
-                            onChange: handleInputChange, 
+                            onChange: e => password.onChange(e.target.value),
+                            onBlur: e => password.onBlur(e.target.value),
+                            value: password.value, 
                             autoComplete: 'off', 
                             readOnly: isReadOnly,
 
                         }}
+                        indicateRequired={type==='create'}
                         labelText={t(labels.password) + ": "}
+                        hasError={password.hasErrorAfterTouch}
                     />
+                    {password.hasErrorAfterTouch && password.errors.map(error => <p style={{color:'red'}} key={error}>{t(error + 'PasswordFailed')}</p>)}
+                    
                     <Input
                         inputProps={{
                             id: 'confirmPassword',
                             name: 'confirmPassword',
                             placeholder: t(labels.confirmPassword),
                             type: 'password',
-                            value: confirmPassword,
-                            onChange: handleInputChange, 
+                            value: confirmPassword.value,
+                            onChange: e => confirmPassword.onChange(e.target.value),
+                            onBlur: e => confirmPassword.onBlur(e.target.value),
                             autoComplete: 'off', 
                             readOnly: isReadOnly
                         }}
+                        indicateRequired={type==='create'}
                         labelText={t(labels.confirmPassword) + ": "}
                     />
+                    {confirmPassword.hasErrorAfterTouch && confirmPassword.errors.map(error => <p style={{color:'red'}} key={error}>{t(error + 'PasswordFailed')}</p>)}
 
-                    <div className='button-container'>
-                        {type === 'create'
-                            ? <FormButton buttonProps={{ type: 'button', onClick: handleClearFields}} backgroundColor="red" color="white">{t(labels.reset)}</FormButton>
-                            : <FormButton buttonProps={{ type: 'button', onClick: handleNavigateBack }} backgroundColor="red" color="white">{t(labels.cancel)}</FormButton>
-                        }
-                        <FormButton buttonProps={{ type: 'submit' }}>{type === 'create' ? t(labels.register) : t(labels.update)}</FormButton>
+                    <div>
+                        <div className='button-container'>
+                            {type === 'create'
+                                ? <FormButton buttonProps={{ type: 'button', onClick: handleClearFields}} backgroundColor="red" color="white">{t(labels.reset)}</FormButton>
+                                : <FormButton buttonProps={{ type: 'button', onClick: handleNavigateBack }} backgroundColor="red" color="white">{t(labels.cancel)}</FormButton>
+                            }
+                            <FormButton
+                                buttonProps={{
+                                    type: 'submit', 
+                                    disabled:
+                                        !email.isValid ||
+                                        !password.isValid ||
+                                        !confirmPassword.isValid ||
+                                        !firstName.isValid ||
+                                        !lastName.isValid
+                                }}
+                            >{type === 'create' ? t(labels.register) : t(labels.update)}</FormButton>
+                        </div>
+                        <p>An asterisk (<span style={{color:'red'}}>*</span>) indicates a required field.</p>
                     </div>
                     {type === 'create' && <p>{t(labels.haveAccountQuestion)} <Link to="/login">{t(labels.login)}</Link></p>}
                 </form>
