@@ -17,6 +17,7 @@
 
 .chat-title {
     text-align: center;
+    margin-bottom: .5rem;
 }
 
 .chat-messages {
@@ -52,13 +53,12 @@
     }
     
     .chat-panel {
-        height: 85vh;
+        height: 88vh;
         display: flex;
         flex-direction: column;
     }
     
     .chat-title {
-        display: none;
         font-size: .7rem;
         padding: .2rem;
     }

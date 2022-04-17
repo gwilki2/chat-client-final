@@ -23,43 +23,48 @@ const AccountScreen = ({ type = 'create' }) => {
     const navigate = useNavigate()
     
 
-    const email = useMyValidation(
-        'email',
-        user.email || '',
-        [
+    const email = useMyValidation({
+        name: 'email',
+        initVal: user.email || '',
+        validationFns: [
             { name: fnNames.isEmail, params: [] },
             { name: fnNames.isNotEmpty, params: [] }
         ],
-        val => val.trim()
-    )
-    const password = useMyValidation(
-        'password',
-        '',
-        [
+        specialFormattingFn: val => val.trim(), 
+        checkOnInit: type!=='create'
+    })
+    const password = useMyValidation({
+        name: 'password',
+        initVal:'',
+        validationFns: [
             {name: type==='create' ? fnNames.hasMinChars : fnNames.minCharsWhenFilled, params: [6]}
-        ]
-    )
-    const firstName = useMyValidation(
-        'firstName',
-        user.firstName || '',
-        [
+        ],
+        checkOnInit: type!=='create'
+    })
+    const firstName = useMyValidation({
+        name: 'firstName',
+        initVal: user.firstName || '',
+        validationFns: [
             {name: fnNames.isNotEmpty, params: []}
-        ]
-    )
-    const lastName = useMyValidation(
-        'lastName',
-        user.lastName || '',
-        [
+        ], 
+        checkOnInit: type!=='create'
+    })
+    const lastName = useMyValidation({
+        name: 'lastName',
+        initVal: user.lastName || '',
+        validationFns: [
             {name: fnNames.isNotEmpty, params: []}
-        ]
-    )
-    const confirmPassword = useMyValidation(
-        'confirmPassword',
-        '',
-        [
+        ], 
+        checkOnInit: type!=='create'
+    })
+    const confirmPassword = useMyValidation({
+        name: 'confirmPassword',
+        initVal: '',
+        validationFns: [
             {name: type==='create' ? fnNames.hasMinChars : fnNames.minCharsWhenFilled, params: [6]}
-        ]
-    )
+        ],
+        checkOnInit: type!=='create'
+    })
 
     const [isReadOnly, setIsReadOnly] = useState(true)
 
@@ -133,6 +138,7 @@ const AccountScreen = ({ type = 'create' }) => {
         
     }, [])
 
+    console.log(firstName.value, firstName.isValid, lastName.value, lastName.isValid, email.value, email.isValid, password.value, password.isValid, confirmPassword.value, confirmPassword.isValid)
     return (
         <div className={styleClasses['account-screen']}>
             <Panel className="form-panel">
@@ -284,6 +290,7 @@ const AccountScreen = ({ type = 'create' }) => {
                                 }}
                             >{type === 'create' ? t(labels.register) : t(labels.update)}</FormButton>
                         </div>
+
                         <p>An asterisk (<span style={{color:'red'}}>*</span>) indicates a required field.</p>
                     </div>
                     {type === 'create' && <p>{t(labels.haveAccountQuestion)} <Link to="/login">{t(labels.login)}</Link></p>}

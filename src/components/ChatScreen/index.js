@@ -55,10 +55,12 @@ const ChatScreen = () => {
     
     return (
         <div className={styleClasses['chat-screen']}>
-            <Panel className={styleClasses['chat-title']}>
-                <h1>{`${t(labels.chatWelcome)}!`}</h1>
-            </Panel>
+            
             <Panel className={styleClasses['chat-panel']}>
+                <Panel className={styleClasses['chat-title']}>
+                    <h1>{`${t(labels.chatWelcome)}!`}</h1>
+                    <h2><span>Warning: </span>Chats are NOT private.  They are shared with all users.</h2>
+                </Panel>
                 <div className={styleClasses['chat-messages']}>
                     {messages.map(msg => <DisplayMessage
                         key={msg.msgId}
@@ -94,3 +96,8 @@ const ChatScreen = () => {
 }
 
 export default ChatScreen
+
+
+// <Panel className={styleClasses['chat-title']}>
+//                 <h1>{`${t(labels.chatWelcome)}!`}</h1>
+//             </Panel>

@@ -19,24 +19,23 @@ const LoginScreen = ({ type }) => {
     const navigate = useNavigate()
     const { t } = useTranslation()
     const [errorMsg, setErrorMsg] = useState('')
-    const email = useMyValidation(
-        'email',
-        '',
-        [
+    const email = useMyValidation({
+        name: 'email',
+        initVal: '',
+        validationFns: [
             { name: fnNames.isEmail, params: [] },
             { name: fnNames.isNotEmpty, params: [] }
         ],
-        val => val.trim()
-    )
-    const password = useMyValidation(
-        'password',
-        '',
-        [
+        specialFormattingFn: val => val.trim()
+    })
+    const password = useMyValidation({
+        name: 'password',
+        initVal: '',
+        validationFns: [
             { name: fnNames.isNotEmpty, params: [] },
-            {name: fnNames.hasMinChars, params: [6]}
-
+            { name: fnNames.hasMinChars, params: [6] }
         ]
-    )
+    })
 
     useTitleBar(t(labels.login), loginIcon)
 
@@ -55,6 +54,7 @@ const LoginScreen = ({ type }) => {
 
     }
     ////////////////////Reminder:  On login get default language from user and change language to default
+    console.log(email.value, password.value)
     return (
         <div className={styleClasses['login-screen']}>
             <Panel className="form-panel">
@@ -83,8 +83,7 @@ const LoginScreen = ({ type }) => {
                             name: password.name, 
                             onChange: e => password.onChange(e.target.value),
                             onBlur: e => password.onBlur(e.target.value),
-                            value: password.value, 
-                            autoComplete: 'off'
+                            value: password.value 
                         }}
                         labelText={t(labels.password) + ": "}
                         hasError={password.hasErrorAfterTouch}

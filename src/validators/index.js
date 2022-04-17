@@ -11,7 +11,7 @@ const hasMinChars = (value, num) => {
 }
 
 const minCharsWhenFilled = (value, num) => {
-    if (isNotEmpty) return hasMinChars(value, num)
+    if (isNotEmpty(value)) return hasMinChars(value, num)
     return true
 }
 

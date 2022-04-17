@@ -1,16 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import validate from "../validators"
 
 //name:string, initVal:string, validationFns:array of {name, [params]}, specialFormattingFn:func(val)
-const useMyValidation = (name, initVal, validationFns, specialFormattingFn) => {
+const useMyValidation = ({ name, initVal, validationFns, checkOnInit = false, specialFormattingFn }) => {
 
     const [value, setValue] = useState(initVal)
     const [isTouched, setIsTouched] = useState(false)
     const [isValid, setIsValid] = useState(false)
 
     const [errors, setErrors] = useState([])
-
-
 
     const onChange = (newValue) => {
 
@@ -23,6 +21,7 @@ const useMyValidation = (name, initVal, validationFns, specialFormattingFn) => {
         })
         
         validationFns.forEach(valFn => {
+            console.log('running valFn:', valFn.name, 'for', newValue)
             if (!validate[valFn.name](newValue, ...valFn.params)) {
                 finalIsValid = false
                 errList.push(valFn.name)
@@ -48,8 +47,15 @@ const useMyValidation = (name, initVal, validationFns, specialFormattingFn) => {
         setErrors([])
     }
 
+    useEffect(() => {
+        if (checkOnInit) {
+        console.log('running check on init for ', name)
+        onChange(value)
+    }
+    }, [])
+    
 
-
+    console.log('running useMyValidation', name, value)
     return {
         name, 
         isTouched, 
