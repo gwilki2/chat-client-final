@@ -6,24 +6,32 @@ import labels from '../../locale/labels'
 import Input from '../UI/Input'
 import { Fragment, useRef, useState } from 'react'
 import FormButton from '../UI/FormButton'
-import { useSelector } from 'react-redux'
-import {v4} from 'uuid'
+import { useDispatch, useSelector } from 'react-redux'
+//import {v4} from 'uuid'
 import DisplayMessage from './DisplayMessage'
 //import beep1 from '../../assets/mixkit-long-pop-2358.wav'
-import useSocket from '../../hooks/useSocket'
+import useChatSocket from '../../hooks/useChatSocket'
+import { sendMessage } from '../../store/chat/chatActions'
 
 const ChatScreen = () => {
 
     const { t } = useTranslation()
     const currUser = useSelector(state => state.auth.user)
     const lang = useSelector(state => state.lang)
-    const socket = useSelector(state => state.chat.socket)
+    const chatSocket = useSelector(state => state.chat.socket)
     const messages = useSelector(state => state.chat.messages)
     const [message, setMessage] = useState('')
     const [lastKeyCode, setLastKeyCode] = useState()
     const scrollAnchorRef = useRef()
+    const dispatch = useDispatch()
 
-    useSocket(currUser)
+
+
+    //dispatches a call to load up 10 most recent chats
+    //imports and save an instance of chatSocket to the store
+    //joins chatSocket
+    //listens for new messages and dispatches them to the store
+    useChatSocket(currUser) 
 
     const handleInputChange = e => {
         
@@ -31,15 +39,13 @@ const ChatScreen = () => {
     }
 
     const handleSendMessage = () => {
-        const newMsg =  {
-            ...currUser,
-            message,
-            date: new Date(),
-            msgId: v4(),
-            submittedWithLang: lang
+        
+        const newMsg = {
+            message, 
+            lang
         }
+        dispatch(sendMessage(newMsg, chatSocket)) //will emit new chat message to all clients after saving to db, passing socket from store instance
 
-        socket.emit('message', newMsg)
         setMessage('')
     }
 
@@ -58,14 +64,16 @@ const ChatScreen = () => {
             
             <Panel className={styleClasses['chat-panel']}>
                 <Panel className={styleClasses['chat-title']}>
-                    <h1>{`${t(labels.chatWelcome)}!`}</h1>
-                    <h2><span>Warning: </span>Chats are NOT private.  They are shared with all users.</h2>
+                    <h2>{`${t(labels.chatWelcome)}!`}</h2>
+                    <h4><span>Warning: </span>Chats are NOT private.  They are shared with all users.</h4>
                 </Panel>
                 <div className={styleClasses['chat-messages']}>
                     {messages.map(msg => <DisplayMessage
-                        key={msg.msgId}
+                        key={msg.id}
                         scrollAnchorRef={scrollAnchorRef}
-                        message={msg} />)}
+                        message={msg}
+                        isFromCurrentUser = {msg.fromUserId===currUser.userId}
+                    />)}
                     <div ref={ scrollAnchorRef } id="scrollAnchor"></div>
                 </div>
                 <div className={styleClasses['send-msg-container']}>

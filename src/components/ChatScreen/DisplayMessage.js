@@ -7,7 +7,7 @@ import labels from '../../locale/labels'
 import { useEffect, useState } from 'react'
 import buildAvatarSrc from '../../utility/buildAvatarSrc'
 
-const DisplayMessage = ({ message, scrollAnchorRef }) => {
+const DisplayMessage = ({ message, scrollAnchorRef, isFromCurrentUser }) => {
     
     const {t}= useTranslation()
     const locales = {es, fr, en}
@@ -26,14 +26,14 @@ const DisplayMessage = ({ message, scrollAnchorRef }) => {
         <div
             className={
                 `${styleClasses['display-message']} 
-                ${message.isCurrUser ? styleClasses['current-user'] : styleClasses['other-user']}`
+                ${isFromCurrentUser ? styleClasses['current-user'] : styleClasses['other-user']}`
             }
         >
             <h6 className={styleClasses['message-meta-data']}>
-                {`${message.isCurrUser ? t(labels.you) : message.firstName}: ${formatDistance(new Date(message.date), currentDate, {addSuffix: true, locale})}`}
+                {`${isFromCurrentUser ? t(labels.you) : message.User.firstName}: ${formatDistance(new Date(message.createdAt), currentDate, {addSuffix: true, locale})}`}
             </h6>
             <div className={styleClasses['message-body']}>
-                <img src={buildAvatarSrc(message.avatar)} alt="avatar" /> {message.message.split(/\n/).map((msg, i) => <p key={i}>{msg}</p>)}
+                <img src={buildAvatarSrc(message.User.avatar)} alt="avatar" /> {message.message.split(/\n/).map((msg, i) => <p key={i}>{msg}</p>)}
             </div>
         </div>
     )

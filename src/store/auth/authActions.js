@@ -6,6 +6,9 @@ import labels from '../../locale/labels'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/pro-duotone-svg-icons'
 import sendAvatar from '../../services/sendAvatar'
+// import chatSocket from '../../sockets/chatSocket'
+// import { saveChatSocket } from '../chat/chatActions'
+
 
 const {loggedIn, loggedOut, registered, updatedUser} = authSlice.actions
 
@@ -15,6 +18,7 @@ export const logIn = (email, password, navigate) => async dispatch => {
         const response = await loginService(email, password) 
         dispatch(loggedIn(response))
         dispatch(changeLanguage(response.user.lang))
+        //dispatch(saveChatSocket(chatSocket))
         navigate('/')
         
     } catch (e) {

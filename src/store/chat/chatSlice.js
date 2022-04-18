@@ -13,6 +13,9 @@ export default createSlice({
         recievedMessage: (state, action) => {
             //console.log(action.payload)
             state.messages.push(action.payload)
+        }, 
+        recievedInitialMessages: (state, action) => {
+            state.messages = [...action.payload]
         }
     }
 })
