@@ -65,7 +65,7 @@ const ChatScreen = () => {
             <Panel className={styleClasses['chat-panel']}>
                 <Panel className={styleClasses['chat-title']}>
                     <h2>{`${t(labels.chatWelcome)}!`}</h2>
-                    <h4><span>Warning: </span>Chats are NOT private.  They are shared with all users.</h4>
+                    <h4>{t(labels.warningNotPrivate)}</h4>
                 </Panel>
                 <div className={styleClasses['chat-messages']}>
                     {messages.map(msg => <DisplayMessage
