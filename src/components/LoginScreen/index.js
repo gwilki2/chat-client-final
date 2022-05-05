@@ -41,20 +41,20 @@ const LoginScreen = ({ type }) => {
 
     const onLogin = async e => {
         e.preventDefault()
-        console.log(e.target.email.value, e.target.password.value)
+        //console.log(e.target.email.value, e.target.password.value)
 
         try {
             
             await dispatch(logIn(email.value.trim(), password.value.trim(), navigate))
             setErrorMsg('')
         } catch (e) {
-            console.log('in login catch')
+            console.log('in login catch', e)
             setErrorMsg(t(e.response.data.error))
         }
 
     }
     ////////////////////Reminder:  On login get default language from user and change language to default
-    console.log(email.value, password.value)
+    //console.log(email.value, password.value)
     return (
         <div className={styleClasses['login-screen']}>
             <Panel className="form-panel">

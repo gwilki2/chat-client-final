@@ -30,8 +30,8 @@ export const loginService = async (email, password) => {
         setLocalStorageAndHeaders(data)
         return data
     } catch (e) {
-        console.log('loginservice', e.response.data.error)
-        throw new Error(e)
+        //console.log('loginservice', e.response.data.error)
+        throw e
     }
 }
 
@@ -41,7 +41,7 @@ export const registerService = async (formData) => {
         setLocalStorageAndHeaders(data)
         return data
     } catch (e) {
-        throw new Error(e)
+        throw e
     }
 }
 
@@ -52,7 +52,7 @@ export const updateUserService = async (formData) => {
         setLocalStorageAndHeaders(data)
         return data
     } catch (e) {
-        throw new Error(e)
+        throw e
     }
 }
 
@@ -60,7 +60,7 @@ export const logoutService = async () => {
     try {
         setLocalStorageAndHeaders()        
     } catch (e) {
-        throw new Error(e)
+        throw e
     }
 }
 

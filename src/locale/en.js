@@ -42,7 +42,10 @@ const translations = {
     [labels.isNotEmptyPasswordFailed]: "Password cannot be blank or white-space.", 
     [labels.hasMinCharsPasswordFailed]: "Password is not long enough (6+)", 
     [labels.minCharsWhenFilledPasswordFailed]: "Password is not long enough (6+)",
-    [labels.warningNotPrivate]: "Warning: Chats are NOT private. They are shared with all users."
+    [labels.warningNotPrivate]: "Warning: Chats are NOT private. They are shared with all users.", 
+    [labels.defaultLangIsRequired]: "Please select a default language.",
+    [labels.genderIsRequired]: "Please select a gender."
+
 
 
 

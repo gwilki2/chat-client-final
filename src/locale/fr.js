@@ -42,9 +42,9 @@ const translations = {
     [labels.isNotEmptyPasswordFailed] : "Le mot de passe ne peut pas être vide ou composé d'espaces blancs.",
     [labels.hasMinCharsPasswordFailed] : "Le mot de passe n'est pas assez long. (6+)",
     [labels.minCharsWhenFilledPasswordFailed] : "Le mot de passe n'est pas assez long. (6+)",
-    [labels.warningNotPrivate]: "Avertissement : les discussions ne sont PAS privées. Ils sont partagés avec tous les utilisateurs."
-
-
+    [labels.warningNotPrivate]: "Avertissement : les discussions ne sont PAS privées. Ils sont partagés avec tous les utilisateurs.",
+    [labels.defaultLangIsRequired] : "Veuillez sélectionner une langue par défaut.",
+    [labels.genderIsRequired] : "Veuillez sélectionner un sexe."
 }
 
 export default translations

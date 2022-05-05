@@ -49,7 +49,9 @@ const labels = {
     "isNotEmptyPasswordFailed": "isNotEmptyPasswordFailed", 
     "hasMinCharsPasswordFailed": "hasMinCharsPasswordFailed", 
     "minCharsWhenFilledPasswordFailed": "minCharsWhenFilledPasswordFailed",
-    "warningNotPrivate": "warningNotPrivate"
+    "warningNotPrivate": "warningNotPrivate", 
+    "defaultLangIsRequired": "defaultLangIsRequired", 
+    "genderIsRequired": "genderIsRequired"
 }
 
 export default labels
